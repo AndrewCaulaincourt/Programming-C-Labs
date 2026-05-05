@@ -442,46 +442,59 @@ int main(void)
 #include <stdlib.h>
 #include <errno.h>
 
-int main(void) {
+int main(void)
+{
     char int_str[64];
     char double_str[64];
 
-    // --- Обработка целого числа ---
+    // Обработка целого числа
     printf("Введите целое число (например, -42): ");
-    if (fgets(int_str, sizeof(int_str), stdin)) {
+    if (fgets(int_str, sizeof(int_str), stdin))
+    {
         char *endptr;
-        errno = 0; // Обнуляем errno перед вызовом
+        errno = 0;
 
         long int_val = strtol(int_str, &endptr, 10);
 
-        if (endptr == int_str) {
+        if (endptr == int_str)
+        {
             printf("Ошибка: не распознано ни одной цифры для целого числа.\n");
-        } else if (errno == ERANGE) {
+        }
+        else if (errno == ERANGE)
+        {
             printf("Ошибка: произошло переполнение диапазона (ERANGE).\n");
-        } else {
-            // Проверяем, не осталось ли лишнего мусора после числа
-            if (*endptr != '\0' && *endptr != '\n') {
+        }
+        else
+        {
+            if (*endptr != '\0' && *endptr != '\n')
+            {
                 printf("Предупреждение: обнаружены лишние символы после целого числа ('%s').\n", endptr);
             }
             printf("Успешно: распознано целое число %ld\n", int_val);
         }
     }
 
-    // --- Обработка вещественного числа ---
+    // Обработка вещественного числа
     printf("\nВведите вещественное число (например, 3.14): ");
-    if (fgets(double_str, sizeof(double_str), stdin)) {
+    if (fgets(double_str, sizeof(double_str), stdin))
+    {
         char *endptr;
-        errno = 0; // Снова обнуляем errno
+        errno = 0;
 
         double double_val = strtod(double_str, &endptr);
 
-        if (endptr == double_str) {
+        if (endptr == double_str)
+        {
             printf("Ошибка: не распознано ни одной цифры для вещественного числа.\n");
-        } else if (errno == ERANGE) {
+        }
+        else if (errno == ERANGE)
+        {
             printf("Ошибка: произошло переполнение диапазона (ERANGE).\n");
-        } else {
-            // Проверяем, не осталось ли мусора
-            if (*endptr != '\0' && *endptr != '\n') {
+        }
+        else
+        {
+            if (*endptr != '\0' && *endptr != '\n')
+            {
                 printf("Предупреждение: обнаружены лишние символы после вещественного числа ('%s').\n", endptr);
             }
             printf("Успешно: распознано вещественное число %.2f\n", double_val);
@@ -517,34 +530,44 @@ int main(void) {
 #include <ctype.h>
 #include <string.h>
 
-int main(void) {
+int main(void)
+{
     char str[64];
 
     printf("Введите строку (10-20 символов: буквы, цифры, знаки): ");
-    if (fgets(str, sizeof(str), stdin)) {
-        // Удаляем NUL-символ переноса строки
+    if (fgets(str, sizeof(str), stdin))
+    {
         size_t len = strlen(str);
-        if (len > 0 && str[len - 1] == '\n') {
+        if (len > 0 && str[len - 1] == '\n')
+        {
             str[len - 1] = '\0';
         }
 
         printf("\nРезультат классификации:\n");
-        // Организуем цикл по всем символам строки до NUL
-        for (size_t i = 0; str[i] != '\0'; i++) {
-            // Приводим символ к unsigned char согласно технической подсказке
+        for (size_t i = 0; str[i] != '\0'; i++)
+        {
             unsigned char c = (unsigned char)str[i];
 
             printf("Символ '%c' - ", c);
 
-            if (isalpha(c)) {
+            if (isalpha(c))
+            {
                 printf("буква\n");
-            } else if (isdigit(c)) {
+            }
+            else if (isdigit(c))
+            {
                 printf("цифра\n");
-            } else if (isspace(c)) {
+            }
+            else if (isspace(c))
+            {
                 printf("пробел\n");
-            } else if (ispunct(c)) {
+            }
+            else if (ispunct(c))
+            {
                 printf("пунктуация\n");
-            } else {
+            }
+            else
+            {
                 printf("другой символ\n");
             }
         }
